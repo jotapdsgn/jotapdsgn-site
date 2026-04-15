@@ -1,0 +1,201 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variáveis e base */
+@layer base {
+  :root {
+    --background: 270 15% 6%;
+    --foreground: 0 0% 95%;
+
+    --card: 270 12% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 270 12% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 249 100% 69%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 249 80% 75%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 270 10% 15%;
+    --muted-foreground: 270 5% 55%;
+
+    --accent: 270 60% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 270 10% 18%;
+    --input: 270 10% 18%;
+    --ring: 249 100% 69%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 270 15% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 249 100% 69%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 12% 14%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 270 10% 18%;
+    --sidebar-ring: 249 100% 69%;
+
+    --indigo-main: #7860ff;
+    --indigo-light: #9b8cff;
+    --indigo-dark: #3b2f8f;
+  }
+}
+
+/* Base styles */
+@layer base {
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    @apply antialiased;
+    background-color: #030303;
+    background-image: radial-gradient(circle at 50% -20%, #201a4d 0%, #030303 100%);
+    background-attachment: fixed;
+    color: hsl(var(--foreground));
+    font-family: 'Montserrat', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+
+  h1, h2, h3 {
+    @apply font-bold tracking-tighter;
+  }
+
+  .card-glass {
+    border-radius: 1rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    background-clip: padding-box;
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 6px 30px rgba(2,6,23,0.6);
+  }
+}
+
+/* Utilities custom */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--indigo-main), var(--indigo-light));
+  }
+
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, var(--indigo-main), var(--indigo-light));
+  }
+
+  .bg-gradient-subtle {
+    background: linear-gradient(180deg, #030303, #0a0a0f);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 40px rgba(155, 140, 255, 0.30), 0 0 80px rgba(120, 96, 255, 0.10);
+  }
+
+  .border-glow {
+    border: 1px solid rgba(155, 140, 255, 0.18);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* BOTÃO COM BORDA ANIMADA */
+  .glow-border {
+    position: relative;
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  .glow-border::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      var(--indigo-main),
+      var(--indigo-light),
+      transparent
+    );
+    animation: borderRun 3s linear infinite;
+    filter: blur(4px);
+  }
+
+  .glow-border::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background: #030303;
+    z-index: 1;
+  }
+
+  /* Seção Clara */
+  .section-light {
+    background-color: #ffffff;
+    color: #1a1a1a;
+  }
+
+  .section-light h2, 
+  .section-light h3, 
+  .section-light p {
+    color: #1a1a1a;
+  }
+
+  /* Typing Cursor */
+  .cursor::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: var(--indigo-main);
+    margin-left: 2px;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+  }
+
+  /* Marquee Animation */
+  .animate-marquee {
+    animation: marquee 15s linear infinite;
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Animação */
+@keyframes borderRun {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
