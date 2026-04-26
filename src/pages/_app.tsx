@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
-import "@/index.css";
+import "@/styles/globals.css";
 import "@fontsource/space-grotesk/index.css";
 
 const queryClient = new QueryClient();

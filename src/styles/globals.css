@@ -55,7 +55,7 @@
 
 /* Base styles */
 @layer base {
-  html, body, #root {
+  html, body, #__next {
     height: 100%;
   }
 
