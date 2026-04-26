@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Check, ArrowRight, ArrowLeft, FileText, Monitor, BookOpen, Database, HelpCircle, Download, CreditCard } from "lucide-react";
+import { Check, ArrowRight, ArrowLeft, FileText, Monitor, BookOpen, Database, HelpCircle, Download } from "lucide-react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -96,28 +96,7 @@ const ConfiguratorInstitutional = () => {
     );
   };
 
-  const handleCheckout = async () => {
-    console.log("Iniciando checkout front-end...", { totalPrice });
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: totalPrice / 2, // cobra 50%
-        }),
-      });
 
-      const data = await response.json();
-
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (error) {
-      console.error("Erro ao processar checkout:", error);
-    }
-  };
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
@@ -260,13 +239,9 @@ const ConfiguratorInstitutional = () => {
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(textGray[0], textGray[1], textGray[2]);
-    doc.text("• Pagamento via PIX ou Cartão de Crédito.", 20, currentY);
+    doc.text("• Design 100% focado no seu público-alvo.", 20, currentY);
     currentY += 7;
-    doc.text("• 50% de entrada para início imediato do design.", 20, currentY);
-    currentY += 7;
-    doc.text("• 50% restante após finalização, ajustes e aprovação final.", 20, currentY);
-    currentY += 7;
-    doc.text("• Prazo de entrega alinhado conforme complexidade do briefing.", 20, currentY);
+    doc.text("• Entrega alinhada conforme complexidade do briefing.", 20, currentY);
 
     currentY += 20;
 
@@ -446,7 +421,6 @@ const ConfiguratorInstitutional = () => {
                 pagesPrice={pagesPrice}
                 selectedExtras={selectedExtras}
                 handleDownloadPDF={handleDownloadPDF}
-                handleCheckout={handleCheckout}
               />
             </div>
 
@@ -518,7 +492,7 @@ const ConfiguratorInstitutional = () => {
 
                   <div className="mt-8 p-4 bg-white/5 border border-white/10 rounded-lg">
                     <p className="text-sm text-gray-400 text-center font-medium">
-                      O pagamento é realizado em duas etapas:<br className="md:hidden" /> 50% no início e 50% após a aprovação final do projeto.
+                      Após o envio, entraremos em contato para validar os detalhes e iniciar seu projeto.
                     </p>
                   </div>
 
@@ -542,7 +516,6 @@ const ConfiguratorInstitutional = () => {
                 pagesPrice={pagesPrice}
                 selectedExtras={selectedExtras}
                 handleDownloadPDF={handleDownloadPDF}
-                handleCheckout={handleCheckout}
               />
             </div>
           </div>
@@ -554,7 +527,7 @@ const ConfiguratorInstitutional = () => {
 };
 
 // Componente de Resumo isolado para reutilização
-const SummaryCard = ({ selectedPlan, totalPrice, basePrice, pagesCount, pagesPrice, selectedExtras, handleDownloadPDF, handleCheckout }: any) => (
+const SummaryCard = ({ selectedPlan, totalPrice, basePrice, pagesCount, pagesPrice, selectedExtras, handleDownloadPDF }: any) => (
   <div className="bg-card rounded-2xl border border-white/10 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.4)]">
     <h3 className="text-lg font-bold text-white mb-6">Resumo do pedido</h3>
 
@@ -602,10 +575,6 @@ const SummaryCard = ({ selectedPlan, totalPrice, basePrice, pagesCount, pagesPri
         <p className="text-2xl font-bold text-white">R$ {totalPrice}</p>
       </div>
 
-      <p className="text-xs text-center text-gray-400 mt-4">
-        Apenas 50% (R$ {totalPrice / 2}) para iniciar.
-      </p>
-
       <Button
         onClick={handleDownloadPDF}
         variant="outline"
@@ -615,13 +584,11 @@ const SummaryCard = ({ selectedPlan, totalPrice, basePrice, pagesCount, pagesPri
         Baixar orçamento em PDF
       </Button>
 
-      <Button
-        className="w-full mt-3 bg-primary hover:bg-primary/90 text-white shadow-[0_0_15px_rgba(120,96,255,0.4)] transition-all"
-        onClick={handleCheckout}
-      >
-        <CreditCard className="w-4 h-4 mr-2" />
-        Pagar entrada agora
-      </Button>
+      <div className="mt-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+        <p className="text-xs text-center text-primary/80">
+          Envie o briefing para receber o retorno da nossa equipe.
+        </p>
+      </div>
     </div>
   </div>
 );
