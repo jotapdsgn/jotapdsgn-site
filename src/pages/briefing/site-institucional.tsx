@@ -125,7 +125,7 @@ const ConfiguratorInstitutional = () => {
     doc.text("JOTAPDSGN", pageWidth / 2, 22, { align: "center" });
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-    doc.text("SOLUÇÕES DIGITAIS DE ALTO IMPACTO", pageWidth / 2, 30, { align: "center" });
+    // Subtítulo removido conforme solicitação
 
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
@@ -239,9 +239,13 @@ const ConfiguratorInstitutional = () => {
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(textGray[0], textGray[1], textGray[2]);
-    doc.text("• Design 100% focado no seu público-alvo.", 20, currentY);
+    doc.text("• 50% de entrada para reserva de agenda e início imediato do projeto.", 20, currentY);
     currentY += 7;
-    doc.text("• Entrega alinhada conforme complexidade do briefing.", 20, currentY);
+    doc.text("• 50% restantes pagos apenas na entrega e aprovação final do site.", 20, currentY);
+    currentY += 7;
+    doc.text("• Aceitamos PIX, Cartão de Crédito, Débito e Boleto Bancário.", 20, currentY);
+    currentY += 7;
+    doc.text("• Condições flexíveis: parcele no cartão para o seu maior conforto.", 20, currentY);
 
     currentY += 20;
 
@@ -264,7 +268,7 @@ const ConfiguratorInstitutional = () => {
     doc.setTextColor(textGray[0], textGray[1], textGray[2]);
     doc.setFontSize(8);
     doc.text("Válido por 3 dias úteis. Proposta gerada automaticamente.", 20, pageHeight - 12);
-    doc.text("WhatsApp: (61) 99313-9130  |  Email: jpegnogueira@gmail.com", pageWidth - 20, pageHeight - 12, { align: "right" });
+    doc.text("WhatsApp: (37) 99862-3827  |  Email: jpegnogueira@gmail.com", pageWidth - 20, pageHeight - 12, { align: "right" });
 
     doc.save(`proposta-jotapdsgn-institucional.pdf`);
   };

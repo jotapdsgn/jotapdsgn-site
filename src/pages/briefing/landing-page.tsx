@@ -119,7 +119,7 @@ const ConfiguratorLandingPage = () => {
     doc.text("JOTAPDSGN", pageWidth / 2, 22, { align: "center" });
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-    doc.text("SOLUÇÕES DIGITAIS DE ALTO IMPACTO", pageWidth / 2, 30, { align: "center" });
+    // Subtítulo removido conforme solicitação
     
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
@@ -206,7 +206,7 @@ const ConfiguratorLandingPage = () => {
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
-    doc.text(`Parcelamento disponível sob consulta`, pageWidth / 2, currentY + 50, { align: "center" });
+    doc.text(`Entrada de R$ ${totalPrice / 2},00 + 50% na aprovação`, pageWidth / 2, currentY + 50, { align: "center" });
 
     currentY += 82;
 
@@ -220,13 +220,13 @@ const ConfiguratorLandingPage = () => {
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(textGray[0], textGray[1], textGray[2]);
-    doc.text("• Design 100% focado no seu público-alvo.", 20, currentY);
+    doc.text("• 50% de entrada para reserva de agenda e início imediato do projeto.", 20, currentY);
     currentY += 7;
-    doc.text("• Reserva técnica mediante aceite da proposta.", 20, currentY);
+    doc.text("• 50% restantes pagos apenas na entrega e aprovação final do design.", 20, currentY);
     currentY += 7;
-    doc.text("• Entrega alinhada conforme complexidade do projeto.", 20, currentY);
+    doc.text("• Aceitamos PIX, Cartão de Crédito, Débito e Boleto Bancário.", 20, currentY);
     currentY += 7;
-    doc.text("• O projeto segue as melhores práticas de SEO e Conversão.", 20, currentY);
+    doc.text("• Condições flexíveis: parcele no cartão para o seu maior conforto.", 20, currentY);
 
     currentY += 20;
 
@@ -249,7 +249,7 @@ const ConfiguratorLandingPage = () => {
     doc.setTextColor(textGray[0], textGray[1], textGray[2]);
     doc.setFontSize(8);
     doc.text("Este orçamento é válido por 3 dias úteis.", 20, pageHeight - 12);
-    doc.text("WhatsApp: (61) 99313-9130  |  Email: jpegnogueira@gmail.com", pageWidth - 20, pageHeight - 12, { align: "right" });
+    doc.text("WhatsApp: (37) 99862-3827  |  Email: jpegnogueira@gmail.com", pageWidth - 20, pageHeight - 12, { align: "right" });
 
     doc.save(`proposta-jotapdsgn-${selectedPlan}.pdf`);
   };
