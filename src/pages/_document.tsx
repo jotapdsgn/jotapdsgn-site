@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="pt-BR">
       <Head>
-        <meta name="description" content="Jotapdsgn - Soluções Digitais de Alto Impacto" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
       </Head>
       <body>
         <Main />

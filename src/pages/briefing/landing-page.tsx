@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Check, ArrowRight, Monitor, Zap, Plus, ArrowLeft, HelpCircle, Download } from "lucide-react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
+import Head from "next/head";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,7 +27,7 @@ const ConfiguratorLandingPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   // Form State
   const [formData, setFormData] = useState({
     nome: "",
@@ -39,7 +40,7 @@ const ConfiguratorLandingPage = () => {
     publicoAlvo: "",
     prazo: ""
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -55,17 +56,17 @@ const ConfiguratorLandingPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     setTimeout(() => {
       const planName = selectedPlan === "simples" ? "Landing Page Simples" : "Landing Page Completa";
       const extrasNames = selectedExtras.map(id => EXTRAS.find(e => e.id === id)?.label).join(", ") || "Nenhum";
-      
+
       const text = `Plano: ${planName}\nExtras: ${extrasNames}\nTOTAL: R$ ${totalPrice},00`;
 
       // Envio Silencioso via API Gratuita do FormSubmit
       fetch("https://formsubmit.co/ajax/jpegnogueira@gmail.com", {
         method: "POST",
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
@@ -75,17 +76,17 @@ const ConfiguratorLandingPage = () => {
           Detalhes_do_Pedido: text
         })
       })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.log(error));
-      
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
+
       setIsSubmitting(false);
       setIsSuccess(true);
     }, 1500);
   };
 
   const toggleExtra = (id: string) => {
-    setSelectedExtras(prev => 
+    setSelectedExtras(prev =>
       prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id]
     );
   };
@@ -96,9 +97,9 @@ const ConfiguratorLandingPage = () => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    
+
     // CORES (RGB)
-    const primaryIndigo = [120, 96, 255]; 
+    const primaryIndigo = [120, 96, 255];
     const bgColor = [3, 3, 3];
     const cardColor = [15, 12, 18];
     const textWhite = [255, 255, 255];
@@ -120,7 +121,7 @@ const ConfiguratorLandingPage = () => {
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     // Subtítulo removido conforme solicitação
-    
+
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
     doc.text("ORÇAMENTO DE PROJETO", pageWidth / 2, 40, { align: "center" });
@@ -136,14 +137,14 @@ const ConfiguratorLandingPage = () => {
     // Card de Resumo
     doc.setFillColor(cardColor[0], cardColor[1], cardColor[2]);
     if (typeof (doc as any).roundedRect === 'function') {
-        (doc as any).roundedRect(20, currentY, pageWidth - 40, 35, 3, 3, "F");
-        doc.setDrawColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
-        doc.setLineWidth(0.1);
-        (doc as any).roundedRect(20, currentY, pageWidth - 40, 35, 3, 3, "S");
+      (doc as any).roundedRect(20, currentY, pageWidth - 40, 35, 3, 3, "F");
+      doc.setDrawColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
+      doc.setLineWidth(0.1);
+      (doc as any).roundedRect(20, currentY, pageWidth - 40, 35, 3, 3, "S");
     } else {
-        doc.rect(20, currentY, pageWidth - 40, 35, "F");
-        doc.setDrawColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
-        doc.rect(20, currentY, pageWidth - 40, 35, "S");
+      doc.rect(20, currentY, pageWidth - 40, 35, "F");
+      doc.setDrawColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
+      doc.rect(20, currentY, pageWidth - 40, 35, "S");
     }
 
     doc.setFontSize(10);
@@ -182,15 +183,15 @@ const ConfiguratorLandingPage = () => {
     // --- SEÇÃO INVESTIMENTO (CARD DESTAQUE) ---
     doc.setFillColor(cardColor[0], cardColor[1], cardColor[2]);
     if (typeof (doc as any).roundedRect === 'function') {
-        (doc as any).roundedRect(20, currentY, pageWidth - 40, 60, 4, 4, "F");
-        doc.setLineWidth(0.8);
-        doc.setDrawColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
-        (doc as any).roundedRect(20, currentY, pageWidth - 40, 60, 4, 4, "S");
+      (doc as any).roundedRect(20, currentY, pageWidth - 40, 60, 4, 4, "F");
+      doc.setLineWidth(0.8);
+      doc.setDrawColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
+      (doc as any).roundedRect(20, currentY, pageWidth - 40, 60, 4, 4, "S");
     } else {
-        doc.rect(20, currentY, pageWidth - 40, 60, "F");
-        doc.setLineWidth(0.8);
-        doc.setDrawColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
-        doc.rect(20, currentY, pageWidth - 40, 60, "S");
+      doc.rect(20, currentY, pageWidth - 40, 60, "F");
+      doc.setLineWidth(0.8);
+      doc.setDrawColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
+      doc.rect(20, currentY, pageWidth - 40, 60, "S");
     }
 
     doc.setTextColor(textGray[0], textGray[1], textGray[2]);
@@ -202,7 +203,7 @@ const ConfiguratorLandingPage = () => {
     doc.setFontSize(38);
     doc.setFont("helvetica", "bold");
     doc.text(`R$ ${totalPrice},00`, pageWidth / 2, currentY + 38, { align: "center" });
-    
+
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(primaryIndigo[0], primaryIndigo[1], primaryIndigo[2]);
@@ -255,9 +256,29 @@ const ConfiguratorLandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* HEADER SIMPLES */}
-      <header className="bg-card border-b border-white/10 sticky top-0 z-50">
+    <>
+      <Head>
+        <title>Orçamento de Landing Page | Jotapdsgn</title>
+        <meta name="description" content="Simule e solicite o orçamento para o desenvolvimento da sua Landing Page. Especialista na criação de sites e landing pages em Itaúna - MG." />
+        <meta name="keywords" content="Orçamento Landing Page, Website em Itaúna - MG, Desenvolvimento de Landing Page, Criação de Sites Itaúna" />
+        
+        {/* Open Graph / Facebook / LinkedIn */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.jotapdsgn.com/briefing/landing-page" />
+        <meta property="og:title" content="Orçamento de Landing Page | Jotapdsgn" />
+        <meta property="og:description" content="Simule e solicite o orçamento para o desenvolvimento da sua Landing Page." />
+        <meta property="og:image" content="https://www.jotapdsgn.com/preview.jpg" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://www.jotapdsgn.com/briefing/landing-page" />
+        <meta property="twitter:title" content="Orçamento de Landing Page | Jotapdsgn" />
+        <meta property="twitter:description" content="Simule e solicite o orçamento para o desenvolvimento da sua Landing Page." />
+        <meta property="twitter:image" content="https://www.jotapdsgn.com/preview.jpg" />
+      </Head>
+      <div className="min-h-screen bg-background">
+        {/* HEADER SIMPLES */}
+        <header className="bg-card border-b border-white/10 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center text-sm font-medium text-gray-400 hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -270,10 +291,10 @@ const ConfiguratorLandingPage = () => {
 
       <main className="max-w-7xl mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
+
           {/* LADO ESQUERDO: OPÇÕES */}
           <div className="lg:col-span-8 space-y-12">
-            
+
             <section>
               <div className="mb-6">
                 <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Landing Page Profissional</h1>
@@ -285,11 +306,10 @@ const ConfiguratorLandingPage = () => {
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                   onClick={() => setSelectedPlan("simples")}
-                  className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${
-                    selectedPlan === "simples" 
-                    ? "border-primary bg-primary/10 shadow-[0_0_15px_rgba(120,96,255,0.1)]" 
-                    : "border-white/10 bg-card hover:border-white/20"
-                  }`}
+                  className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${selectedPlan === "simples"
+                      ? "border-primary bg-primary/10 shadow-[0_0_15px_rgba(120,96,255,0.1)]"
+                      : "border-white/10 bg-card hover:border-white/20"
+                    }`}
                 >
                   <div className="flex justify-between items-start">
                     <div>
@@ -311,11 +331,10 @@ const ConfiguratorLandingPage = () => {
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                   onClick={() => setSelectedPlan("completa")}
-                  className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${
-                    selectedPlan === "completa" 
-                    ? "border-primary bg-primary/10 shadow-[0_0_15px_rgba(120,96,255,0.1)]" 
-                    : "border-white/10 bg-card hover:border-white/20"
-                  }`}
+                  className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${selectedPlan === "completa"
+                      ? "border-primary bg-primary/10 shadow-[0_0_15px_rgba(120,96,255,0.1)]"
+                      : "border-white/10 bg-card hover:border-white/20"
+                    }`}
                 >
                   <div className="flex justify-between items-start">
                     <div>
@@ -350,11 +369,10 @@ const ConfiguratorLandingPage = () => {
                       whileHover={{ scale: 1.005 }}
                       whileTap={{ scale: 0.995 }}
                       onClick={() => toggleExtra(extra.id)}
-                      className={`flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
-                        isSelected 
-                        ? "border-primary bg-primary/10 shadow-[0_0_15px_rgba(120,96,255,0.1)]" 
-                        : "border-white/10 bg-card hover:border-white/20"
-                      }`}
+                      className={`flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${isSelected
+                          ? "border-primary bg-primary/10 shadow-[0_0_15px_rgba(120,96,255,0.1)]"
+                          : "border-white/10 bg-card hover:border-white/20"
+                        }`}
                     >
                       <div className="flex items-center">
                         <div className={`flex flex-shrink-0 items-center justify-center h-10 w-10 rounded-lg ${isSelected ? 'bg-primary/20' : 'bg-white/5'} mr-4`}>
@@ -374,9 +392,8 @@ const ConfiguratorLandingPage = () => {
                           <p className="text-sm text-gray-400">+ R$ {extra.price}</p>
                         </div>
                       </div>
-                      <div className={`h-6 w-6 rounded-full border-2 flex items-center justify-center transition-colors ${
-                        isSelected ? 'border-primary bg-primary text-white shadow-[0_0_8px_rgba(120,96,255,0.4)]' : 'border-white/20 bg-transparent'
-                      }`}>
+                      <div className={`h-6 w-6 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected ? 'border-primary bg-primary text-white shadow-[0_0_8px_rgba(120,96,255,0.4)]' : 'border-white/20 bg-transparent'
+                        }`}>
                         {isSelected && <Check className="h-3 w-3" />}
                       </div>
                     </motion.div>
@@ -386,13 +403,13 @@ const ConfiguratorLandingPage = () => {
             </section>
 
             <div className="lg:hidden">
-               <SummaryCard 
-                  selectedPlan={selectedPlan} 
-                  totalPrice={totalPrice} 
-                  basePrice={basePrice} 
-                  selectedExtras={selectedExtras}
-                  handleDownloadPDF={handleDownloadPDF}
-               />
+              <SummaryCard
+                selectedPlan={selectedPlan}
+                totalPrice={totalPrice}
+                basePrice={basePrice}
+                selectedExtras={selectedExtras}
+                handleDownloadPDF={handleDownloadPDF}
+              />
             </div>
 
             <section className="bg-card rounded-2xl border border-white/10 p-6 md:p-8">
@@ -402,8 +419,8 @@ const ConfiguratorLandingPage = () => {
               </div>
 
               {isSuccess ? (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }} 
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="bg-green-500/10 border border-green-500/20 rounded-xl p-6 text-center"
                 >
@@ -420,44 +437,44 @@ const ConfiguratorLandingPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2 text-left">
                       <label className="text-sm font-medium text-gray-300">Nome completo *</label>
-                      <Input required value={formData.nome} onChange={e => setFormData({...formData, nome: e.target.value})} placeholder="Seu nome" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                      <Input required value={formData.nome} onChange={e => setFormData({ ...formData, nome: e.target.value })} placeholder="Seu nome" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2 text-left">
                       <label className="text-sm font-medium text-gray-300">Email *</label>
-                      <Input type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="seu@email.com" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                      <Input type="email" required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder="seu@email.com" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2 text-left">
                       <label className="text-sm font-medium text-gray-300">WhatsApp *</label>
-                      <Input required value={formData.whatsapp} onChange={e => setFormData({...formData, whatsapp: e.target.value})} placeholder="(00) 00000-0000" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                      <Input required value={formData.whatsapp} onChange={e => setFormData({ ...formData, whatsapp: e.target.value })} placeholder="(00) 00000-0000" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2 text-left">
                       <label className="text-sm font-medium text-gray-300">Nome da Empresa</label>
-                      <Input value={formData.empresa} onChange={e => setFormData({...formData, empresa: e.target.value})} placeholder="Sua marca" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                      <Input value={formData.empresa} onChange={e => setFormData({ ...formData, empresa: e.target.value })} placeholder="Sua marca" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-white/5 pt-6">
                     <div className="space-y-2 text-left">
                       <label className="text-sm font-medium text-gray-300">Referências visuais</label>
-                      <Input value={formData.referencias} onChange={e => setFormData({...formData, referencias: e.target.value})} placeholder="Ex: apple.com, tesla.com..." className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                      <Input value={formData.referencias} onChange={e => setFormData({ ...formData, referencias: e.target.value })} placeholder="Ex: apple.com, tesla.com..." className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2 text-left">
                       <label className="text-sm font-medium text-gray-300">Concorrentes</label>
-                      <Input value={formData.concorrentes} onChange={e => setFormData({...formData, concorrentes: e.target.value})} placeholder="Quem são seus concorrentes?" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                      <Input value={formData.concorrentes} onChange={e => setFormData({ ...formData, concorrentes: e.target.value })} placeholder="Quem são seus concorrentes?" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2 text-left">
                       <label className="text-sm font-medium text-gray-300">Público-alvo *</label>
-                      <Input required value={formData.publicoAlvo} onChange={e => setFormData({...formData, publicoAlvo: e.target.value})} placeholder="Para quem é o site?" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                      <Input required value={formData.publicoAlvo} onChange={e => setFormData({ ...formData, publicoAlvo: e.target.value })} placeholder="Para quem é o site?" className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2 text-left">
                       <label className="text-sm font-medium text-gray-300">Prazo desejado</label>
-                      <Input value={formData.prazo} onChange={e => setFormData({...formData, prazo: e.target.value})} placeholder="Ex: 15 dias, 1 mês..." className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                      <Input value={formData.prazo} onChange={e => setFormData({ ...formData, prazo: e.target.value })} placeholder="Ex: 15 dias, 1 mês..." className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                     </div>
                   </div>
 
                   <div className="space-y-2 border-t border-white/5 pt-6 text-left">
                     <label className="text-sm font-medium text-gray-300">Objetivo do projeto *</label>
-                    <Textarea required value={formData.objetivo} onChange={e => setFormData({...formData, objetivo: e.target.value})} placeholder="Descreva brevemente o que você espera alcançar..." className="min-h-[100px] bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                    <Textarea required value={formData.objetivo} onChange={e => setFormData({ ...formData, objetivo: e.target.value })} placeholder="Descreva brevemente o que você espera alcançar..." className="min-h-[100px] bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                   </div>
 
                   <div className="mt-8 p-4 bg-white/5 border border-white/10 rounded-lg">
@@ -477,26 +494,27 @@ const ConfiguratorLandingPage = () => {
 
           <div className="lg:col-span-4 hidden lg:block">
             <div className="sticky top-24">
-              <SummaryCard 
-                  selectedPlan={selectedPlan} 
-                  totalPrice={totalPrice} 
-                  basePrice={basePrice} 
-                  selectedExtras={selectedExtras}
-                  handleDownloadPDF={handleDownloadPDF}
-               />
+              <SummaryCard
+                selectedPlan={selectedPlan}
+                totalPrice={totalPrice}
+                basePrice={basePrice}
+                selectedExtras={selectedExtras}
+                handleDownloadPDF={handleDownloadPDF}
+              />
             </div>
           </div>
 
         </div>
       </main>
     </div>
+    </>
   );
 };
 
 const SummaryCard = ({ selectedPlan, totalPrice, basePrice, selectedExtras, handleDownloadPDF }: any) => (
   <div className="bg-card rounded-2xl border border-white/10 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.4)]">
     <h3 className="text-lg font-bold text-white mb-6 text-left">Resumo do pedido</h3>
-    
+
     <div className="space-y-4">
       <div className="flex justify-between items-start">
         <div className="text-left">
@@ -527,13 +545,13 @@ const SummaryCard = ({ selectedPlan, totalPrice, basePrice, selectedExtras, hand
       )}
 
       <div className="h-px w-full bg-white/10 my-4" />
-      
+
       <div className="flex justify-between items-center">
         <p className="text-base font-semibold text-white">Total a investir</p>
         <p className="text-2xl font-bold text-white">R$ {totalPrice}</p>
       </div>
-      
-      <Button 
+
+      <Button
         onClick={handleDownloadPDF}
         variant="outline"
         className="w-full mt-6 bg-transparent border-white/20 text-white hover:bg-white/10 transition-colors"

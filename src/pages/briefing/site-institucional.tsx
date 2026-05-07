@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Check, ArrowRight, ArrowLeft, FileText, Monitor, BookOpen, Database, HelpCircle, Download } from "lucide-react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
+import Head from "next/head";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -274,9 +275,29 @@ const ConfiguratorInstitutional = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* HEADER SIMPLES */}
-      <header className="bg-card border-b border-white/10 sticky top-0 z-50">
+    <>
+      <Head>
+        <title>Orçamento de Site Institucional | Jotapdsgn</title>
+        <meta name="description" content="Simule e solicite o orçamento para a criação do seu Site Institucional. Web design de alto padrão em Itaúna - MG." />
+        <meta name="keywords" content="Orçamento Site Institucional, Website em Itaúna - MG, Criação de Sites Itaúna, Web Design Itaúna" />
+        
+        {/* Open Graph / Facebook / LinkedIn */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.jotapdsgn.com/briefing/site-institucional" />
+        <meta property="og:title" content="Orçamento de Site Institucional | Jotapdsgn" />
+        <meta property="og:description" content="Simule e solicite o orçamento para a criação do seu Site Institucional." />
+        <meta property="og:image" content="https://www.jotapdsgn.com/preview.jpg" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://www.jotapdsgn.com/briefing/site-institucional" />
+        <meta property="twitter:title" content="Orçamento de Site Institucional | Jotapdsgn" />
+        <meta property="twitter:description" content="Simule e solicite o orçamento para a criação do seu Site Institucional." />
+        <meta property="twitter:image" content="https://www.jotapdsgn.com/preview.jpg" />
+      </Head>
+      <div className="min-h-screen bg-background">
+        {/* HEADER SIMPLES */}
+        <header className="bg-card border-b border-white/10 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center text-sm font-medium text-gray-400 hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -527,6 +548,7 @@ const ConfiguratorInstitutional = () => {
         </div>
       </main>
     </div>
+    </>
   );
 };
 
