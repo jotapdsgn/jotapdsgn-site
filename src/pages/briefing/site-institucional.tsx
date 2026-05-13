@@ -467,7 +467,7 @@ const ConfiguratorInstitutional = () => {
                   </div>
                   <h3 className="text-lg font-semibold text-green-400 mb-2">Pedido recebido com sucesso!</h3>
                   <p className="text-green-300">
-                    Sua configuração foi salva. Em até 1 hora nossa equipe entrará em contato via WhatsApp.
+                    Em até 1 hora entrarei em contato via WhatsApp.
                   </p>
                 </motion.div>
               ) : (
@@ -517,7 +517,7 @@ const ConfiguratorInstitutional = () => {
 
                   <div className="mt-8 p-4 bg-white/5 border border-white/10 rounded-lg">
                     <p className="text-sm text-gray-400 text-center font-medium">
-                      Após o envio, entraremos em contato para validar os detalhes e iniciar seu projeto.
+                      Após o envio, entrarei em contato para validar os detalhes e iniciar seu projeto.
                     </p>
                   </div>
 
@@ -612,7 +612,7 @@ const SummaryCard = ({ selectedPlan, totalPrice, basePrice, pagesCount, pagesPri
 
       <div className="mt-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
         <p className="text-xs text-center text-primary/80">
-          Envie o briefing para receber o retorno da nossa equipe.
+          Envie o briefing para análise e receba um retorno em até 1 hora.
         </p>
       </div>
     </div>
