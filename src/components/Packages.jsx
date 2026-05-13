@@ -80,6 +80,7 @@ const Packages = () => {
                 
                 <Link
                   href={pkg.route}
+                  scroll={true}
                   className="flex flex-col p-8 rounded-xl bg-card border-glow hover:glow-purple transition-all duration-500 group cursor-pointer h-full relative"
                 >
                   {/* Título e descrição */}

@@ -18,10 +18,17 @@ export default function App({ Component, pageProps }: AppProps) {
       window.history.scrollRestoration = 'manual';
     }
 
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
     const handleRouteChange = () => {
-      setTimeout(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' as any });
-      }, 0);
+      // Execute immediately and also after a short delay to account for rendering
+      scrollToTop();
+      setTimeout(scrollToTop, 10);
+      setTimeout(scrollToTop, 100);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);

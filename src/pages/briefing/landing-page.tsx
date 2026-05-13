@@ -25,9 +25,22 @@ const ConfiguratorLandingPage = () => {
 
   // Força o scroll pro topo ao abrir a página
   useEffect(() => {
-    setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as any });
-    }, 0);
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+    
+    scrollToTop();
+    const t1 = setTimeout(scrollToTop, 10);
+    const t2 = setTimeout(scrollToTop, 100);
+    const t3 = setTimeout(scrollToTop, 500);
+    
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
   }, []);
 
   // Form State
