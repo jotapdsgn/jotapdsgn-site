@@ -28,7 +28,9 @@ const ConfiguratorInstitutional = () => {
 
   // Força o scroll pro topo ao abrir a página
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as any });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as any });
+    }, 0);
   }, []);
 
   // Form State
