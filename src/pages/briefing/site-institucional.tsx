@@ -7,6 +7,7 @@ import Head from "next/head";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { openWhatsAppWithMessage } from "@/lib/whatsapp";
 // import logo from "@/assets/logo-jotapdsgn.png";
 
 // Definições de Preços
@@ -73,37 +74,38 @@ const ConfiguratorInstitutional = () => {
 
   const totalPrice = basePrice + pagesPrice + extrasPrice;
 
-  // Lógica de envio
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const planName = selectedPlan === "simples" ? "Institucional Simples" : "Institucional Completo";
-      const extrasNames = selectedExtras.map(id => EXTRAS.find(e => e.id === id)?.label).join(", ") || "Nenhum";
+    const planName = selectedPlan === "simples" ? "Institucional Simples" : "Institucional Completo";
+    const extrasNames = selectedExtras.map(id => EXTRAS.find(e => e.id === id)?.label).join(", ") || "Nenhum";
 
-      const text = `Plano: ${planName}\nPáginas: ${pagesCount}\nExtras: ${extrasNames}\nTOTAL: R$ ${totalPrice},00`;
+    const message = [
+      "*Novo pedido — Site Institucional*",
+      "",
+      `*Nome:* ${formData.nome}`,
+      `*E-mail:* ${formData.email}`,
+      `*WhatsApp:* ${formData.whatsapp}`,
+      formData.empresa ? `*Empresa:* ${formData.empresa}` : null,
+      `*Público-alvo:* ${formData.publicoAlvo}`,
+      formData.referencias ? `*Referências:* ${formData.referencias}` : null,
+      formData.concorrentes ? `*Concorrentes:* ${formData.concorrentes}` : null,
+      formData.prazo ? `*Prazo desejado:* ${formData.prazo}` : null,
+      `*Objetivo:* ${formData.objetivo}`,
+      "",
+      "*Resumo do pedido*",
+      `Plano: ${planName}`,
+      `Páginas: ${pagesCount}`,
+      `Extras: ${extrasNames}`,
+      `*Total: R$ ${totalPrice},00*`,
+    ]
+      .filter(Boolean)
+      .join("\n");
 
-      // Envio Silencioso via API Gratuita do FormSubmit
-      fetch("https://formsubmit.co/ajax/jpegnogueira@gmail.com", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          Assunto: "Novo Pedido de Site Institucional",
-          ...formData,
-          Detalhes_do_Pedido: text
-        })
-      })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.log(error));
-
-      setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 1500);
+    openWhatsAppWithMessage(message);
+    setIsSubmitting(false);
+    setIsSuccess(true);
   };
 
   const toggleExtra = (id: string) => {
@@ -480,9 +482,9 @@ const ConfiguratorInstitutional = () => {
                   <div className="h-12 w-12 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Check className="h-6 w-6" />
                   </div>
-                  <h3 className="text-lg font-semibold text-green-400 mb-2">Pedido recebido com sucesso!</h3>
+                  <h3 className="text-lg font-semibold text-green-400 mb-2">Quase lá!</h3>
                   <p className="text-green-300">
-                    Em até 1 hora entrarei em contato via WhatsApp.
+                    Confirme o envio da mensagem no WhatsApp. Em até 1 hora retorno o contato.
                   </p>
                 </motion.div>
               ) : (
@@ -532,12 +534,12 @@ const ConfiguratorInstitutional = () => {
 
                   <div className="mt-8 p-4 bg-white/5 border border-white/10 rounded-lg">
                     <p className="text-sm text-gray-400 text-center font-medium">
-                      Após o envio, entrarei em contato para validar os detalhes e iniciar seu projeto.
+                      Ao enviar, o WhatsApp abrirá com seu pedido pronto — basta confirmar a mensagem.
                     </p>
                   </div>
 
                   <Button type="submit" disabled={isSubmitting} size="lg" className="w-full text-lg h-14 mt-6 hover:shadow-[0_0_20px_rgba(120,96,255,0.4)] transition-shadow">
-                    {isSubmitting ? "Processando..." : "Enviar pedido"}
+                    {isSubmitting ? "Abrindo WhatsApp..." : "Enviar pedido via WhatsApp"}
                     {!isSubmitting && <ArrowRight className="ml-2 w-5 h-5" />}
                   </Button>
                 </form>
